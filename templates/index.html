@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Squat Tracker</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .video-box {
+            display: inline-block;
+            border: 3px solid #444;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Squat Tracker</h1>
+    <div class="video-box">
+        <img src="{{ url_for('video_feed') }}" width="720" />
+    </div>
+</body>
+</html>
