@@ -2,28 +2,83 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Squat Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Squat Counter</title>
     <style>
         body {
-            background-color: #1a1a1a;
+            background-color: #0e1117;
             color: #ffffff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
         }
+
+        .header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .rep-display {
+            font-size: 22px;
+            color: #8b949e;
+        }
+
+        .rep-count {
+            font-size: 54px;
+            font-weight: 800;
+            color: #58a6ff;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
         .video-box {
-            display: inline-block;
-            border: 3px solid #444;
-            border-radius: 8px;
+            border: 2px solid #30363d;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            max-width: 960px;
+            width: 100%;
+            background: #161b22;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .video-box img {
+            width: 100%;
+            display: block;
+        }
+
+        .hint {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #484f58;
         }
     </style>
 </head>
 <body>
-    <h1>AI Squat Tracker</h1>
-    <div class="video-box">
-        <img src="{{ url_for('video_feed') }}" width="720" />
+
+    <div class="header">
+        <div class="rep-display">
+            Reps: <span class="rep-count" id="reps">0</span>
+        </div>
     </div>
+
+    <div class="video-box">
+        <img src="{{ url_for('video_feed') }}" alt="Live Squat Feed">
+    </div>
+
+    <div class="hint">Press F5 to reset counter</div>
+
+    <script>
+        async function updateStats() {
+            try {
+                const res = await fetch('/stats');
+                const data = await res.json();
+                document.getElementById('reps').textContent = data.counter;
+            } catch (err) {}
+        }
+        setInterval(updateStats, 100);
+    </script>
 </body>
 </html>
